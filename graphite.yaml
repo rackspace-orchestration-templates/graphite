@@ -108,10 +108,14 @@ resources:
           install_method: binary
         statsd:
           flush_internal: "60000"
+        rax:
+          firewall:
+            tcp: [80, 2003, 2004]
+            udp: [8125]
         run_list: ["recipe[apt]",
                    "recipe[graphite]",
                    "recipe[statsd]",
-                   "recipe[graphite-firewall]"]
+                   "recipe[rax-firewall]"]
 
 outputs:
   private_key:
