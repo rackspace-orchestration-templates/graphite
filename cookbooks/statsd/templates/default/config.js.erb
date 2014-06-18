@@ -1,0 +1,21 @@
+{
+  "graphitePort": <%= @graphite_port %>,
+  "graphiteHost": "<%= @graphite_host %>",
+  "address": "<%= @address %>",
+  "port": <%= @port %>,
+  "flushInterval": <%= @flush_interval %>,
+  "percentThreshold": <%= @percent_threshold %>,
+  "deleteIdleStats": <%= @delete_idle_stats %>,
+  "deleteGauges": <%= @delete_gauges %>,
+  "deleteTimers": <%= @delete_timers %>,
+  "deleteSets": <%= @delete_sets %>,
+  "deleteCounters": <%= @delete_counters %>,
+  "graphite": {
+    "legacyNamespace": <%= @legacy_namespace %>,
+    "globalPrefix": "<%= @global_prefix %>",
+    "prefixCounter": "<%= @prefix_counter %>",
+    "prefixTimer": "<%= @prefix_timer %>",
+    "prefixGauge": "<%= @prefix_gauge %>",
+    "prefixSet": "<%= @prefix_set %>"
+  }
+}

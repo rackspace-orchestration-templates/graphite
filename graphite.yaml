@@ -1,0 +1,131 @@
+heat_template_version: 2013-05-23
+
+description: |
+  This is a Heat template to deploy a single Linux server running the Graphite
+  with StatsD
+
+parameter_groups:
+
+- label: Server Settings
+  parameters:
+  - flavor
+  - image
+
+- label: rax-dev-params
+  # These are parameters that will not be displayed in the portal. The purpose
+  # of these parameters are for users who are developing or testing newer or
+  # different setups. If any of these parameters are changed, there is a good
+  # chance this stack will fail to properly deploy.
+  parameters:
+  - kitchen
+  - chef_version
+
+parameters:
+
+  image:
+    description: Server Image
+    type: string
+    default: Ubuntu 12.04 LTS (Precise Pangolin)
+    constraints:
+    - allowed_values:
+      - Ubuntu 12.04 LTS (Precise Pangolin)
+      description: Must be a supported operating system.
+
+  flavor:
+    description: Rackspace Cloud Server flavor
+    type: string
+    default: 2 GB Performance
+    constraints:
+    - allowed_values:
+      - 1 GB Performance
+      - 2 GB Performance
+      - 4 GB Performance
+      - 8 GB Performance
+      - 15 GB Performance
+      - 30 GB Performance
+      - 512MB Standard Instance
+      - 1GB Standard Instance
+      - 2GB Standard Instance
+      - 4GB Standard Instance
+      - 8GB Standard Instance
+      - 15GB Standard Instance
+      - 30GB Standard Instance
+      description: |
+        Must be a valid Rackspace Cloud Server flavor for the region you have
+        selected to deploy into.
+
+  kitchen:
+    description: URL for the kitchen to use
+    type: string
+    default: https://github.com/rackspace-orchestration-templates/graphite
+
+  chef_version:
+    description: Version of chef client to use
+    type: string
+    default: 11.12.8
+
+resources:
+
+  graphite_password:
+    type: "OS::Heat::RandomString"
+    properties:
+      length: 16
+      sequence: lettersdigits
+
+  ssh_key:
+    type: "OS::Nova::KeyPair"
+    properties:
+      name: { get_param: "OS::stack_id" }
+      save_private_key: true
+
+  graphite_server:
+    type: "Rackspace::Cloud::Server"
+    properties:
+      name: graphite
+      flavor: { get_param: flavor }
+      image: { get_param: image }
+      key_name: { get_resource: ssh_key }
+
+  graphite_server_setup:
+    type: "OS::Heat::ChefSolo"
+    depends_on: graphite_server
+    properties:
+      username: root
+      private_key: { get_attr: [ssh_key, private_key] }
+      host: { get_attr: [graphite_server, accessIPv4] }
+      kitchen: { get_param: kitchen }
+      chef_version: { get_param: chef_version }
+      node:
+        graphite:
+          password: { get_attr: [graphite_password, value] }
+          storage_schemas: [{"name": "catchall","pattern": "^.*","retentions": "1m:90d,5m:2y"}]
+          timezone: Etc/UTC
+          url: 0.0.0.0
+          version: 0.9.12
+        memcached:
+          listen: 127.0.0.1
+        nodejs:
+          install_method: binary
+        statsd:
+          flush_internal: "60000"
+        run_list: ["recipe[apt]",
+                   "recipe[graphite]",
+                   "recipe[statsd]",
+                   "recipe[graphite-firewall]"]
+
+outputs:
+  private_key:
+    value: { get_attr: [ssh_key, private_key] }
+
+  server_ip:
+    value: { get_attr: [graphite_server, accessIPv4] }
+
+  graphite_password:
+    value: { get_attr: [graphite_password, value] }
+
+  graphite_url:
+    value:
+      str_replace:
+        template: "https://%server_ip%"
+        params:
+          "%server_ip%": { get_attr: [graphite_server, accessIPv4] }
