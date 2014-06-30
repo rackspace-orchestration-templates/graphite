@@ -23,6 +23,7 @@ parameter_groups:
 parameters:
 
   image:
+    label: Server Image
     description: Server Image
     type: string
     default: Ubuntu 12.04 LTS (Precise Pangolin)
@@ -32,6 +33,7 @@ parameters:
       description: Must be a supported operating system.
 
   flavor:
+    label: Cloud Server Size
     description: Rackspace Cloud Server flavor
     type: string
     default: 2 GB Performance
@@ -55,11 +57,13 @@ parameters:
         selected to deploy into.
 
   kitchen:
+    label: Kitchen
     description: URL for the kitchen to use
     type: string
     default: https://github.com/rackspace-orchestration-templates/graphite
 
   chef_version:
+    label: Chef Version
     description: Version of chef client to use
     type: string
     default: 11.12.8
