@@ -89,6 +89,8 @@ resources:
       flavor: { get_param: flavor }
       image: { get_param: image }
       key_name: { get_resource: ssh_key }
+      metadata:
+        rax-heat: { get_param: "OS::stack_id" }
 
   graphite_server_setup:
     type: "OS::Heat::ChefSolo"
