@@ -8,6 +8,7 @@ reach-info:
   icon-20x20: https://0b5294b243620310a700-e388a7f3aba385a925111b1fc6f680d4.ssl.cf2.rackcdn.com/blueprint-generic-whitespace-20x20.png
 hidden_outputs:
   - private_key
+  - graphite_password
 abstract: |
   Single Linux server running [Graphite](http://graphite.readthedocs.org) and
   [Statsd](https://github.com/etsy/statsd/).
