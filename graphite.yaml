@@ -107,11 +107,16 @@ resources:
       chef_version: { get_param: chef_version }
       node:
         graphite:
+          listen_port: 443
           password: { get_attr: [graphite_password, value] }
           storage_schemas: [{"name": "catchall","pattern": "^.*","retentions": "1m:90d,5m:2y"}]
           timezone: Etc/UTC
           url: 0.0.0.0
           version: 0.9.12
+          ssl:
+            enabled: true
+            certificate_file: /etc/ssl/certs/ssl-cert-snakeoil.pem
+            certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
         memcached:
           listen: 127.0.0.1
         nodejs:
@@ -120,7 +125,7 @@ resources:
           flush_internal: "60000"
         rax:
           firewall:
-            tcp: [80, 2003, 2004]
+            tcp: [443, 2003, 2004]
             udp: [8125]
         run_list: ["recipe[apt]",
                    "recipe[graphite]",
@@ -135,6 +140,10 @@ outputs:
   server_ip:
     description: Server IP
     value: { get_attr: [graphite_server, accessIPv4] }
+
+  graphite_login:
+    description: Graphite Login
+    value: 'root'
 
   graphite_password:
     description: Graphite Password
