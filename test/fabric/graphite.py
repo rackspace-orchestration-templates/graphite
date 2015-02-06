@@ -5,7 +5,9 @@ from envassert import detect, file, package, port, process, service, user
 
 def graphite_is_responding():
     with hide('running', 'stdout'):
-        homepage = run("wget --no-check-certificate --quiet --output-document - https://localhost/")
+        wget_cmd = ("wget --no-check-certificate --quiet"
+                    "--output-document - https://localhost/")
+        homepage = run(wget_cmd)
         if re.search('Graphite Browser', homepage):
             return True
         else:
