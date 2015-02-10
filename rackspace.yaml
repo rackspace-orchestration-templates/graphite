@@ -57,3 +57,4 @@ instructions: |
   side Graphite also listening for metrics to be written to it on UDP port
   8125. It writes its aggregated metrics to the local Graphite Carbon backend.
   It's configuration can be customized in the /etc/statsd/config.js file.
+user-input-required: true
