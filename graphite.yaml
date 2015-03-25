@@ -87,7 +87,7 @@ resources:
       save_private_key: true
 
   graphite_server:
-    type: "Rackspace::Cloud::Server"
+    type: "OS::Nova::Server"
     properties:
       name: graphite
       flavor: { get_param: flavor }
