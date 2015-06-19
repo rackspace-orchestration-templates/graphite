@@ -15,4 +15,4 @@ cookbook 'nodejs'
 cookbook 'graphite',
   :git => 'https://github.com/hw-cookbooks/graphite'
 cookbook 'rax-firewall',
-  :git => 'https://github.com/brint/rax-firewall-cookbook'
+  :git => 'https://github.com/heat-cookbooks/rax-firewall-cookbook'
