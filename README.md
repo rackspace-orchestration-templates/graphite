@@ -1,3 +1,4 @@
+[![Circle CI](https://circleci.com/gh/rackspace-orchestration-templates/graphite/tree/master.png?style=shield)](https://circleci.com/gh/rackspace-orchestration-templates/graphite)
 Description
 ===========
 

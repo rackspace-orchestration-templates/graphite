@@ -58,3 +58,7 @@ instructions: |
   8125. It writes its aggregated metrics to the local Graphite Carbon backend.
   It's configuration can be customized in the /etc/statsd/config.js file.
 user-input-required: true
+description: |
+  Single Linux server running
+  [Graphite 0.9.12](http://graphite.readthedocs.org) and
+  [StatsD](https://github.com/etsy/statsd/).
