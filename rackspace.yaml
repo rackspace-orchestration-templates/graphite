@@ -10,8 +10,8 @@ hidden_outputs:
   - private_key
   - graphite_password
 abstract: |
-  Single Linux server running [Graphite](http://graphite.readthedocs.org) and
-  [Statsd](https://github.com/etsy/statsd/).
+  Graphite is software which allows numeric, time-series data to be stored and
+  visualised as graphs.
 instructions: |
   #### Getting Started
   If you are new to Graphite the [Graphite
