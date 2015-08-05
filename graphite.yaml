@@ -1,8 +1,9 @@
 heat_template_version: 2013-05-23
 
 description: |
-  This is a Heat template to deploy a single Linux server running the Graphite
-  with StatsD
+  Single Linux server running
+  [Graphite 0.9.12](http://graphite.readthedocs.org) and
+  [StatsD](https://github.com/etsy/statsd/).
 
 parameter_groups:
 
